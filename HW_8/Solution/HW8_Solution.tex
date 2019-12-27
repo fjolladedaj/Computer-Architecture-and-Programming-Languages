@@ -1,0 +1,288 @@
+\documentclass[a4paper]{article}
+\usepackage[pdftex]{hyperref}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{tabu}
+% move the asterisk at the right position
+\lstset{basicstyle=\ttfamily,tabsize=4,literate={*}{${}^*{}$}1}
+%\lstset{language=C,basicstyle=\ttfamily}
+\usepackage{moreverb}
+\usepackage{palatino}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{array,mathtools}
+\usepackage{amsmath}
+\usepackage{enumitem,amssymb}
+\usepackage{pifont}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
+\hspace{-2.5pt}}
+\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
+
+
+
+%% pdflatex?
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+\pdffalse % we are not running PDFLaTeX
+\else
+\pdfoutput=1 % we are running PDFLaTeX
+\pdftrue
+\fi
+\ifpdf
+\fi
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\parindent=0cm
+\parskip=0cm
+
+\setlength{\columnseprule}{0.4pt}
+\addtolength{\columnsep}{2pt}
+
+\addtolength{\textheight}{5.5cm}
+\addtolength{\topmargin}{-26mm}
+\pagestyle{empty}
+
+%%
+%% Sheet setup
+%% 
+\newcommand{\coursename}{Computer Architecture and Programming Languages}
+\newcommand{\courseno}{CO20-320241}
+\newcommand*{\carry}[1][1]{\overset{#1}}
+\newcolumntype{B}[1]{r*{#1}{@{\,}r}}
+ 
+\newcommand{\sheettitle}{Homework}
+\newcommand{\mytitle}{}
+\newcommand{\mytoday}{{11th of November}, 2019}
+
+% Current Assignment number
+\newcounter{assignmentno}
+\setcounter{assignmentno}{8}
+
+% Current Problem number, should always start at 1
+\newcounter{problemno}
+\setcounter{problemno}{1}
+
+%%
+%% problem and bonus environment
+%%
+\newcounter{probcalc}
+\newcommand{\problem}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Problem \textcolor{blue}{\arabic{assignmentno}}.\textcolor{blue}{\arabic{problemno}}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+\newcommand{\bonus}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Bonus Problem \textcolor{blue}{\arabic{assignmentno}}.\textcolor{blue}{\arabic{problemno}}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+%% some counters  
+\newcommand{\assignment}{\arabic{assignmentno}}
+
+%% solution  
+\newcommand{\solution}{\pagebreak[2]{\bf Solution:}\\}
+
+%% Hyperref Setup
+\hypersetup{pdftitle={Homework \assignment},
+  pdfsubject={\coursename},
+  pdfauthor={},
+  pdfcreator={},
+  pdfkeywords={Computer Architecture and Programming Languages},
+  %  pdfpagemode={FullScreen},
+  %colorlinks=true,
+  %bookmarks=true,
+  %hyperindex=true,
+  bookmarksopen=false,
+  bookmarksnumbered=true,
+  breaklinks=true,
+  %urlcolor=darkblue
+  urlbordercolor={0 0 0.7}
+}
+
+\begin{document}
+
+
+\coursename \hfill Course: \courseno\\
+Jacobs University Bremen \hfill \mytoday\\
+Fjolla Dedaj\hfill
+\vspace*{0.3cm}\\
+\begin{center}
+{\Large \sheettitle{} \textcolor{blue}{\assignment}\\}
+\end{center}
+\problem{}{0}
+Compute the IEEE 754 single precision binary representation of the following numbers:\\
+\\
+(i) $\frac{25}{32}$\\
+\\
+(ii) $27.3515625$\\
+\\
+\solution
+\\
+(i) $\frac{25}{32} = \frac{25}{2^{5}} = \frac{11001}{2^5} = 0.11001 = 1.1001 \times 2^{-1}$\\
+\\
+Exponent = 127 + (-1) = 126 = 1111110\\
+Sign = 0 (positive number)\\
+Fraction = 10010000000000000000000\\
+\\
+\begin{tabular}{|c|c|c|}
+        \hline
+        $S$  &   $E$(exponent) &   $F$(fraction) \\ \hline
+        $0$   &   $01111110$ &   $10010000000000000000000$ \\ \hline
+    \end{tabular}
+\\
+\\
+\\
+(ii) $27.3515625$\\
+\\
+$27 = 11011_{2}$\\
+\\
+\begin{tabular}{|c|c|c|}
+        \hline
+        $0.3515625 \times 2$  &   $0.703125$ &   0 \\ \hline
+        $0.703125 \times 2$   &   $1.40625$ &   1 \\ \hline
+        $0.40625 \times 2$   &   $0.8125$ &   0  \\ \hline
+        $0.8125 \times 2$   &   $1.625$ &   1 \\ \hline
+        $0.625 \times 2$   &   $1.25$ & 1 \\ \hline
+        $0.25 \times 2$ &   $0.5$ &  0 \\ \hline
+        $0.5 \times 2$   & 1 & 1 \\ \hline
+    \end{tabular}
+\\
+\\
+\\
+$27.3515625 = 11011.01011010...0 = 1.1011010110100...0 \times 2^{4}$\\
+$E = 127 + 4 = 131_{10} = 10000011_2$\\
+\\
+\begin{tabular}{|c|c|c|}
+        \hline
+        $S$  &   $E$(exponent) &   $F$(fraction) \\ \hline
+        $0$   &   $10000011$ &   $10110101101000000000000$ \\ \hline
+    \end{tabular}
+\\
+\\
+\problem{}{0}
+\solution
+\begin{itemize}
+  \item[\done] = True
+  \item[\wontfix] = False
+  \item MIPS properties:
+  \begin{todolist}
+  \item[\done] MIPS has an alignment restriction, that means words must start at addresses
+that are multiples of 4.
+  \item[\wontfix] All MIPS instructions are 30 bits long.
+  \item[\wontfix] MIPS can perform arithmetic operations on memory locations.
+  \item[\wontfix] Parameters to functions are always passed via the stack.
+  \item[\wontfix] A procedure jumps to the address stored in the stack pointer register after it finishes execution.
+  \end{todolist}
+\end{itemize}
+
+\pagebreak
+
+\problem{}{0}
+In MIPS assembly language, registers \$s0 to \$s7 map onto register 16 to 23, and registers \$t0 to \$t7 map onto register 8 to 15. The opcode for addition and subtraction is 0. The function code is 32 for addition and 34 for subtraction. Given all this, translate the following binary word into a MIPS instruction:\\
+\\
+$000000$ $10000$ $10101$ $01011$ $00000$ $100000$\\
+\\
+\solution
+\\
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        Op code  & Source 1 &   Source 2 & Destination & Shift Amount & Fraction Code \\ \hline
+        $000000$   &   $10000$  &   $10101$ & $01011$ & $00000$ & $100000$  \\ \hline
+    \end{tabular}
+\\
+\end{center}
+\begin{center}
+$\Downarrow$
+\end{center}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        0  & 16 & 21 & 11 & 0 & 32 \\ \hline
+        add/subtract  &   \$s0 &   \$s5 & \$t3 & No shift & add \\ \hline
+    \end{tabular}
+\end{center}
+Thus, the instruction is:\\
+\begin{center}
+\textbf{add \$t3, \$s0, \$s5}\\
+\end{center}
+\problem{}{0}
+\\
+\textbf{a) How many bits can be used for the destination address in the j (jump) instruction?\\}
+\\
+\solution
+There is room for a 26-bit address. The 26-bit target address field is transformed into a 32-bit address. This is done at run-time, as the jump instruction is executed.\\
+\\
+\textbf{b) If the address representation within the instruction does not cover the full 32-bit range (as in the previous question), what can be done to still be able to jump anywhere (assuming 32-bit addresses)}?\\
+\\
+\solution
+As mentioned earlier, the 26-bit target address field can be transformed into a 32-bit address. This is done at run-time, as the jump instruction is executed. jr instruction has this behavior.
+\\
+\problem{}{0}
+\solution
+\\
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        Class  & CPI on P1 & Freq * CPI on P1 & CPI on P2 & Frequency & Freq * CPI on P2\\ \hline
+        A   & 1 & 0.6 & 2 & 60\% & 1.2\\ \hline
+        B   & 2 & 0.2 & 2 & 10\% & 0.2\\ \hline
+        C   & 3 & 0.3 & 2 & 10\% & 0.2\\ \hline
+        D   & 4 & 0.4 & 4 & 10\% & 0.4\\ \hline
+        E   & 3 & 0.3 & 4 & 10\% & 0.4\\ \hline
+           &  & $\sum = 1.8$ &  &  & $\sum = 2.4$\\ \hline
+    \end{tabular}
+\\
+\end{center}
+CPU time for P1= $\frac{\textrm{Instruction Count x CPI}}{\textrm{Clock Rate}}$ = $\frac{13 \times 1.8 }{4} = 5.85$\\
+\\
+CPU time for P2= $\frac{\textrm{Instruction Count x CPI}}{\textrm{Clock Rate}}$ = $\frac{14 \times 2.4 }{6} = 5.6$\\
+\\
+Therefore, 5.85/5.6 $\approx$ 1.045 meaning that P2 is 4.5\% faster and will render the image first.\\
+
+\problem{}{0}
+\solution
+\\
+\begin{center}
+\begin{tabular}{|c|c|c|}
+        \hline
+        Class  & CPI on P1 &  CPI on P2 \\ \hline
+        A   & 1 & 2 \\ \hline
+        B   & 3 & 3 \\ \hline
+        C   & 3 & 2 \\ \hline
+        D   & 4 & 3 \\ \hline
+        E   & 2 & 3 \\ \hline
+    \end{tabular}
+\\
+\end{center}
+
+
+T(P1)/T(P2) =(1*2+3+3+4+2)4/(2*2+3+2+3+3)2 = 14*4/15*2 = 28/15 $\approx$ 1.866\\
+\\
+Instruction count is not included because it is the same, therefore the ratio doesn't change.\\
+\\
+Therefore, P2 is 86.6\% faster.\\
+
+\end{document}
